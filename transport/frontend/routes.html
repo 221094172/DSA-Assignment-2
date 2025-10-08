@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="admin-header">
+            <h1>🚌 Transport Management System</h1>
+            <p>Route Management</p>
+        </header>
+
+        <nav class="admin-nav">
+            <a href="index.html" class="nav-link">Dashboard</a>
+            <a href="routes.html" class="nav-link active">Routes</a>
+            <a href="trips.html" class="nav-link">Trips</a>
+            <a href="schedule.html" class="nav-link">Schedule</a>
+        </nav>
+
+        <main class="content">
+            <div class="content-header">
+                <h2>Routes</h2>
+                <button id="addRouteBtn" class="btn btn-primary">+ Add Route</button>
+            </div>
+
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="active">Active</button>
+                <button class="filter-btn" data-filter="inactive">Inactive</button>
+            </div>
+
+            <div id="successMessage" class="alert alert-success" style="display: none;"></div>
+            <div id="errorMessage" class="alert alert-error" style="display: none;"></div>
+
+            <div id="routesList" class="routes-list">
+                <p class="loading">Loading routes...</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Route Modal -->
+    <div id="routeModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Add New Route</h2>
+            
+            <form id="routeForm">
+                <input type="hidden" id="routeId" name="routeId">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="routeNumber">Route Number *</label>
+                        <input type="text" id="routeNumber" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="transportType">Transport Type *</label>
+                        <select id="transportType" required>
+                            <option value="bus">Bus</option>
+                            <option value="train">Train</option>
+                            <option value="metro">Metro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="routeName">Route Name *</label>
+                    <input type="text" id="routeName" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="origin">Origin *</label>
+                        <input type="text" id="origin" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="destination">Destination *</label>
+                        <input type="text" id="destination" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="distance">Distance (km) *</label>
+                        <input type="number" id="distance" step="0.1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estimatedDuration">Duration (minutes) *</label>
+                        <input type="number" id="estimatedDuration" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="basePrice">Base Price ($) *</label>
+                        <input type="number" id="basePrice" step="0.01" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Stops</label>
+                    <div id="stopsContainer">
+                        <div class="stop-item">
+                            <input type="text" class="stop-name" placeholder="Stop name">
+                            <input type="number" class="stop-sequence" placeholder="Sequence">
+                            <input type="number" class="stop-offset" placeholder="Minutes from origin">
+                        </div>
+                    </div>
+                    <button type="button" id="addStopBtn" class="btn btn-small">+ Add Stop</button>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Route</button>
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/routes.js"></script>
+</body>
+</html>

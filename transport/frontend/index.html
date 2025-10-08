@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transport Management - Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="admin-header">
+            <h1>🚌 Transport Management System</h1>
+            <p>Administrator Dashboard</p>
+        </header>
+
+        <nav class="admin-nav">
+            <a href="index.html" class="nav-link active">Dashboard</a>
+            <a href="routes.html" class="nav-link">Routes</a>
+            <a href="trips.html" class="nav-link">Trips</a>
+            <a href="schedule.html" class="nav-link">Schedule</a>
+        </nav>
+
+        <main class="dashboard">
+            <h2>System Overview</h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🛣️</div>
+                    <div class="stat-info">
+                        <h3 id="totalRoutes">0</h3>
+                        <p>Total Routes</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <h3 id="activeRoutes">0</h3>
+                        <p>Active Routes</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🚍</div>
+                    <div class="stat-info">
+                        <h3 id="totalTrips">0</h3>
+                        <p>Total Trips</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-info">
+                        <h3 id="scheduledTrips">0</h3>
+                        <p>Scheduled Trips</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">⏰</div>
+                    <div class="stat-info">
+                        <h3 id="delayedTrips">0</h3>
+                        <p>Delayed Trips</p>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-info">
+                        <h3 id="cancelledTrips">0</h3>
+                        <p>Cancelled Trips</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h3>Quick Actions</h3>
+                <div class="action-buttons">
+                    <a href="routes.html" class="btn btn-primary">Manage Routes</a>
+                    <a href="trips.html" class="btn btn-secondary">Manage Trips</a>
+                    <a href="schedule.html" class="btn btn-info">View Schedule</a>
+                </div>
+            </div>
+
+            <div class="recent-activity">
+                <h3>Recent Activity</h3>
+                <div id="recentActivity" class="activity-list">
+                    <p class="loading">Loading...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

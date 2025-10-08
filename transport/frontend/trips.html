@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="admin-header">
+            <h1>🚌 Transport Management System</h1>
+            <p>Trip Management</p>
+        </header>
+
+        <nav class="admin-nav">
+            <a href="index.html" class="nav-link">Dashboard</a>
+            <a href="routes.html" class="nav-link">Routes</a>
+            <a href="trips.html" class="nav-link active">Trips</a>
+            <a href="schedule.html" class="nav-link">Schedule</a>
+        </nav>
+
+        <main class="content">
+            <div class="content-header">
+                <h2>Trips</h2>
+                <button id="addTripBtn" class="btn btn-primary">+ Schedule Trip</button>
+            </div>
+
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="scheduled">Scheduled</button>
+                <button class="filter-btn" data-filter="in-progress">In Progress</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+                <button class="filter-btn" data-filter="delayed">Delayed</button>
+                <button class="filter-btn" data-filter="cancelled">Cancelled</button>
+            </div>
+
+            <div id="successMessage" class="alert alert-success" style="display: none;"></div>
+            <div id="errorMessage" class="alert alert-error" style="display: none;"></div>
+
+            <div id="tripsList" class="trips-list">
+                <p class="loading">Loading trips...</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Trip Modal -->
+    <div id="tripModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Schedule New Trip</h2>
+            
+            <form id="tripForm">
+                <div class="form-group">
+                    <label for="routeSelect">Route *</label>
+                    <select id="routeSelect" required>
+                        <option value="">Select a route</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vehicleId">Vehicle ID</label>
+                        <input type="text" id="vehicleId">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="driverId">Driver ID</label>
+                        <input type="text" id="driverId">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="scheduledDeparture">Departure Time *</label>
+                        <input type="datetime-local" id="scheduledDeparture" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="scheduledArrival">Arrival Time *</label>
+                        <input type="datetime-local" id="scheduledArrival" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="totalSeats">Total Seats *</label>
+                        <input type="number" id="totalSeats" required min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="currentPrice">Price ($)</label>
+                        <input type="number" id="currentPrice" step="0.01">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Schedule Trip</button>
+                    <button type="button" class="btn btn-secondary" id="cancelTripBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Update Status Modal -->
+    <div id="statusModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Update Trip Status</h2>
+            
+            <form id="statusForm">
+                <input type="hidden" id="statusTripId">
+
+                <div class="form-group">
+                    <label for="tripStatus">Status *</label>
+                    <select id="tripStatus" required>
+                        <option value="scheduled">Scheduled</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                        <option value="delayed">Delayed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+
+                <div id="delayFields" style="display: none;">
+                    <div class="form-group">
+                        <label for="delayReason">Delay Reason</label>
+                        <textarea id="delayReason" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="delayMinutes">Delay (minutes)</label>
+                        <input type="number" id="delayMinutes">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Update Status</button>
+                    <button type="button" class="btn btn-secondary" id="cancelStatusBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/trips.js"></script>
+</body>
+</html>

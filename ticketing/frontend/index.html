@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transport Ticketing System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚌 Transport Ticketing System</h1>
+            <p>Book your journey with ease</p>
+        </header>
+
+        <!-- Login Section -->
+        <div id="loginSection" class="section">
+            <h2>Welcome Back</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="passengerId">Passenger ID:</label>
+                    <input type="text" id="passengerId" placeholder="Enter your passenger ID" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+
+        <!-- Main Content (hidden until logged in) -->
+        <div id="mainContent" class="hidden">
+            <div class="user-info">
+                <span id="userName"></span>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="purchase">Purchase Ticket</button>
+                <button class="tab-btn" data-tab="myTickets">My Tickets</button>
+                <button class="tab-btn" data-tab="validate">Validate Ticket</button>
+            </div>
+
+            <!-- Purchase Ticket Tab -->
+            <div id="purchaseTab" class="tab-content active">
+                <h2>Purchase New Ticket</h2>
+                <form id="purchaseForm">
+                    <div class="form-group">
+                        <label for="tripId">Trip ID:</label>
+                        <input type="text" id="tripId" placeholder="Enter trip ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketType">Ticket Type:</label>
+                        <select id="ticketType" required>
+                            <option value="single">Single</option>
+                            <option value="return">Return</option>
+                            <option value="pass">Day Pass</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method:</label>
+                        <select id="paymentMethod" required>
+                            <option value="credit_card">Credit Card</option>
+                            <option value="debit_card">Debit Card</option>
+                            <option value="mobile_wallet">Mobile Wallet</option>
+                            <option value="cash">Cash</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Purchase Ticket</button>
+                </form>
+                <div id="purchaseResult" class="result-box hidden"></div>
+            </div>
+
+            <!-- My Tickets Tab -->
+            <div id="myTicketsTab" class="tab-content">
+                <h2>My Tickets</h2>
+                <div class="filter-group">
+                    <label>Filter by Status:</label>
+                    <button class="filter-btn active" data-status="all">All</button>
+                    <button class="filter-btn" data-status="CREATED">Created</button>
+                    <button class="filter-btn" data-status="PAID">Paid</button>
+                    <button class="filter-btn" data-status="VALIDATED">Validated</button>
+                    <button class="filter-btn" data-status="EXPIRED">Expired</button>
+                </div>
+                <div id="ticketsList" class="tickets-container">
+                    <p class="loading">Loading tickets...</p>
+                </div>
+            </div>
+
+            <!-- Validate Ticket Tab -->
+            <div id="validateTab" class="tab-content">
+                <h2>Validate Ticket</h2>
+                <form id="validateForm">
+                    <div class="form-group">
+                        <label for="validateTicketId">Ticket ID:</label>
+                        <input type="text" id="validateTicketId" placeholder="Enter ticket ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="validateQRCode">QR Code:</label>
+                        <input type="text" id="validateQRCode" placeholder="Enter QR code" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="validatorId">Validator ID:</label>
+                        <input type="text" id="validatorId" placeholder="Enter validator ID" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Validate Ticket</button>
+                </form>
+                <div id="validateResult" class="result-box hidden"></div>
+            </div>
+        </div>
+
+        <!-- Notification Toast -->
+        <div id="notification" class="notification hidden"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+[ticketing_service]
+port = 9095
+ticketValidityHours = 24
+qrCodeLength = 16
+
+[passenger_service]
+host = "passenger-service"
+port = 9091
+
+[transport_service]
+host = "transport-service"
+port = 9092
+
+[payment_service]
+host = "payment-service"
+port = 9094
+
+[mongodb]
+host = "mongodb"
+port = 27017
+database = "transport_ticketing_system"
+
+[kafka]
+bootstrapServers = "kafka:9092"
+groupId = "ticketing-service-group"
+ticketRequestsTopic = "ticket-requests"
+paymentsProcessedTopic = "payments-processed"
+ticketCreatedTopic = "ticket-created"
+ticketValidatedTopic = "ticket-validated"

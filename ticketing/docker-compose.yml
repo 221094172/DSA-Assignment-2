@@ -1,0 +1,129 @@
+version: '3.8'
+
+services:
+  # MongoDB
+  mongodb:
+    image: mongo:8.2.0
+    container_name: transport-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+    networks:
+      - transport-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Kafka (KRaft mode)
+  kafka:
+    image: apache/kafka:latest
+    container_name: transport-kafka
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_NUM_PARTITIONS: 3
+      CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
+    volumes:
+      - kafka_data:/var/lib/kafka/data
+    networks:
+      - transport-network
+    healthcheck:
+      test: ["CMD", "kafka-topics.sh", "--bootstrap-server", "localhost:9092", "--list"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  # Passenger Service (Mock - assuming it exists)
+  passenger-service:
+    image: passenger-service:latest
+    container_name: passenger-service
+    ports:
+      - "9091:9091"
+    depends_on:
+      - mongodb
+      - kafka
+    networks:
+      - transport-network
+
+  # Transport Service (Mock - assuming it exists)
+  transport-service:
+    image: transport-service:latest
+    container_name: transport-service
+    ports:
+      - "9092:9092"
+    depends_on:
+      - mongodb
+      - kafka
+    networks:
+      - transport-network
+
+  # Payment Service
+  payment-service:
+    image: payment-service:latest
+    container_name: payment-service
+    ports:
+      - "9094:9094"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    networks:
+      - transport-network
+
+  # Ticketing Service (CORE)
+  ticketing-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ticketing-service
+    ports:
+      - "9095:9095"
+    environment:
+      - MONGODB_HOST=mongodb
+      - MONGODB_PORT=27017
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - PASSENGER_SERVICE_HOST=passenger-service
+      - PASSENGER_SERVICE_PORT=9091
+      - TRANSPORT_SERVICE_HOST=transport-service
+      - TRANSPORT_SERVICE_PORT=9092
+      - PAYMENT_SERVICE_HOST=payment-service
+      - PAYMENT_SERVICE_PORT=9094
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      passenger-service:
+        condition: service_started
+      transport-service:
+        condition: service_started
+      payment-service:
+        condition: service_started
+    networks:
+      - transport-network
+    restart: unless-stopped
+
+networks:
+  transport-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+  kafka_data:
