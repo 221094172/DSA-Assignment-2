@@ -1,0 +1,21 @@
+[payment_service]
+port = 9094
+processingDelayMin = 1000
+processingDelayMax = 2000
+failureRate = 0.05
+
+[ticketing_service]
+host = "ticketing-service"
+port = 9095
+
+[mongodb]
+host = "mongodb"
+port = 27017
+database = "transport_ticketing_system"
+
+[kafka]
+bootstrapServers = "kafka:9092"
+groupId = "payment-service-group"
+ticketRequestsTopic = "ticket-requests"
+paymentsProcessedTopic = "payments-processed"
+paymentRefundsTopic = "payment-refunds"

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Transport Ticketing System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Notification Toast -->
+    <div id="notification" class="notification hidden"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>🚍 Transport Admin Dashboard</h1>
+            </div>
+            <div class="user-info">
+                <span>Admin User</span>
+                <button id="logoutBtn" class="btn-logout">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="nav-menu">
+                <button class="nav-item active" data-section="dashboard">
+                    📊 Dashboard
+                </button>
+                <button class="nav-item" data-section="routes">
+                    🛤️ Routes
+                </button>
+                <button class="nav-item" data-section="trips">
+                    🚌 Trips
+                </button>
+                <button class="nav-item" data-section="passengers">
+                    👥 Passengers
+                </button>
+                <button class="nav-item" data-section="tickets">
+                    🎫 Tickets
+                </button>
+                <button class="nav-item" data-section="payments">
+                    💰 Payments
+                </button>
+                <button class="nav-item" data-section="reports">
+                    📈 Reports
+                </button>
+                <button class="nav-item" data-section="disruptions">
+                    ⚠️ Disruptions
+                </button>
+                <button class="nav-item" data-section="notifications">
+                    🔔 Notifications
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard-section" class="content-section active">
+                <h2>System Dashboard</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <h3>Total Passengers</h3>
+                            <p class="stat-value" id="totalPassengers">-</p>
+                            <p class="stat-subtext"><span id="activePassengers">-</span> active</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🛤️</div>
+                        <div class="stat-info">
+                            <h3>Total Routes</h3>
+                            <p class="stat-value" id="totalRoutes">-</p>
+                            <p class="stat-subtext"><span id="activeRoutes">-</span> active</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🚌</div>
+                        <div class="stat-info">
+                            <h3>Total Trips</h3>
+                            <p class="stat-value" id="totalTrips">-</p>
+                            <p class="stat-subtext"><span id="activeTrips">-</span> scheduled</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-info">
+                            <h3>Total Revenue</h3>
+                            <p class="stat-value" id="totalRevenue">$0.00</p>
+                            <p class="stat-subtext">Today: $<span id="todayRevenue">0.00</span></p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🎫</div>
+                        <div class="stat-info">
+                            <h3>Total Payments</h3>
+                            <p class="stat-value" id="totalPayments">-</p>
+                            <p class="stat-subtext"><span id="successRate">-</span>% success rate</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🔔</div>
+                        <div class="stat-info">
+                            <h3>Notifications</h3>
+                            <p class="stat-value" id="totalNotifications">-</p>
+                            <p class="stat-subtext"><span id="totalValidations">-</span> validations</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-section">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list" id="activityList">
+                        <p class="loading">Loading activity...</p>
+                    </div>
+                </div>
+
+                <button class="btn-primary" onclick="refreshDashboard()">🔄 Refresh Dashboard</button>
+            </section>
+
+            <!-- Routes Section -->
+            <section id="routes-section" class="content-section">
+                <h2>Route Management</h2>
+                
+                <div class="form-container">
+                    <h3>Create New Route</h3>
+                    <form id="createRouteForm">
+                        <div class="form-group">
+                            <label>Route Number:</label>
+                            <input type="text" id="routeNumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Route Name:</label>
+                            <input type="text" id="routeName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Origin:</label>
+                            <input type="text" id="routeOrigin" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Destination:</label>
+                            <input type="text" id="routeDestination" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Stops (comma-separated):</label>
+                            <input type="text" id="routeStops" placeholder="Stop1, Stop2, Stop3">
+                        </div>
+                        <div class="form-group">
+                            <label>Base Price:</label>
+                            <input type="number" id="routePrice" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Transport Type:</label>
+                            <select id="routeTransportType" required>
+                                <option value="bus">Bus</option>
+                                <option value="train">Train</option>
+                                <option value="tram">Tram</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-primary">Create Route</button>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <h3>All Routes</h3>
+                    <button class="btn-secondary" onclick="loadRoutes()">🔄 Refresh</button>
+                    <div id="routesList" class="data-list">
+                        <p class="loading">Loading routes...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trips Section -->
+            <section id="trips-section" class="content-section">
+                <h2>Trip Management</h2>
+                
+                <div class="form-container">
+                    <h3>Create New Trip</h3>
+                    <form id="createTripForm">
+                        <div class="form-group">
+                            <label>Route ID:</label>
+                            <input type="text" id="tripRouteId" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Departure Date/Time:</label>
+                            <input type="datetime-local" id="tripDeparture" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Arrival Date/Time:</label>
+                            <input type="datetime-local" id="tripArrival" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Available Seats:</label>
+                            <input type="number" id="tripSeats" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Create Trip</button>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <h3>All Trips</h3>
+                    <div class="filter-group">
+                        <select id="tripStatusFilter" onchange="loadTrips()">
+                            <option value="">All Status</option>
+                            <option value="scheduled">Scheduled</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                        <button class="btn-secondary" onclick="loadTrips()">🔄 Refresh</button>
+                    </div>
+                    <div id="tripsList" class="data-list">
+                        <p class="loading">Loading trips...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Passengers Section -->
+            <section id="passengers-section" class="content-section">
+                <h2>Passenger Management</h2>
+                
+                <div class="table-container">
+                    <button class="btn-secondary" onclick="loadPassengers()">🔄 Refresh</button>
+                    <div id="passengersList" class="data-list">
+                        <p class="loading">Loading passengers...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tickets Section -->
+            <section id="tickets-section" class="content-section">
+                <h2>Ticket Management</h2>
+                
+                <div class="table-container">
+                    <div class="filter-group">
+                        <select id="ticketStatusFilter" onchange="loadTickets()">
+                            <option value="">All Status</option>
+                            <option value="CREATED">Created</option>
+                            <option value="PAID">Paid</option>
+                            <option value="VALIDATED">Validated</option>
+                            <option value="EXPIRED">Expired</option>
+                            <option value="CANCELLED">Cancelled</option>
+                        </select>
+                        <button class="btn-secondary" onclick="loadTickets()">🔄 Refresh</button>
+                    </div>
+                    <div id="ticketsList" class="data-list">
+                        <p class="loading">Loading tickets...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Payments Section -->
+            <section id="payments-section" class="content-section">
+                <h2>Payment Management</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Today's Revenue</h3>
+                        <p class="stat-value" id="paymentTodayRevenue">$0.00</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>This Week</h3>
+                        <p class="stat-value" id="paymentWeekRevenue">$0.00</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>This Month</h3>
+                        <p class="stat-value" id="paymentMonthRevenue">$0.00</p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <button class="btn-secondary" onclick="loadPayments()">🔄 Refresh</button>
+                    <div id="paymentsList" class="data-list">
+                        <p class="loading">Loading payments...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports-section" class="content-section">
+                <h2>Reports & Analytics</h2>
+                
+                <div class="form-container">
+                    <h3>Generate Sales Report</h3>
+                    <form id="salesReportForm">
+                        <div class="form-group">
+                            <label>Start Date:</label>
+                            <input type="date" id="reportStartDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>End Date:</label>
+                            <input type="date" id="reportEndDate" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Generate Report</button>
+                    </form>
+                </div>
+
+                <div id="reportResult" class="result-box hidden"></div>
+            </section>
+
+            <!-- Disruptions Section -->
+            <section id="disruptions-section" class="content-section">
+                <h2>Service Disruptions</h2>
+                
+                <div class="form-container">
+                    <h3>Publish Disruption</h3>
+                    <form id="disruptionForm">
+                        <div class="form-group">
+                            <label>Title:</label>
+                            <input type="text" id="disruptionTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Description:</label>
+                            <textarea id="disruptionDescription" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Severity:</label>
+                            <select id="disruptionSeverity" required>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="critical">Critical</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Affected Routes (comma-separated IDs):</label>
+                            <input type="text" id="disruptionRoutes" placeholder="route1, route2">
+                        </div>
+                        <div class="form-group">
+                            <label>Affected Trips (comma-separated IDs):</label>
+                            <input type="text" id="disruptionTrips" placeholder="trip1, trip2">
+                        </div>
+                        <button type="submit" class="btn-primary">Publish Disruption</button>
+                    </form>
+                </div>
+
+                <div id="disruptionResult" class="result-box hidden"></div>
+            </section>
+
+            <!-- Notifications Section -->
+            <section id="notifications-section" class="content-section">
+                <h2>Notification Management</h2>
+                
+                <div class="form-container">
+                    <h3>Send Notification</h3>
+                    <form id="notificationForm">
+                        <div class="form-group">
+                            <label>Passenger ID (leave empty for broadcast):</label>
+                            <input type="text" id="notifPassengerId">
+                        </div>
+                        <div class="form-group">
+                            <label>Type:</label>
+                            <select id="notifType" required>
+                                <option value="info">Info</option>
+                                <option value="warning">Warning</option>
+                                <option value="alert">Alert</option>
+                                <option value="promotion">Promotion</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Title:</label>
+                            <input type="text" id="notifTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Message:</label>
+                            <textarea id="notifMessage" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Send Notification</button>
+                    </form>
+                </div>
+
+                <div class="table-container">
+                    <h3>All Notifications</h3>
+                    <button class="btn-secondary" onclick="loadNotifications()">🔄 Refresh</button>
+                    <div id="notificationsList" class="data-list">
+                        <p class="loading">Loading notifications...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

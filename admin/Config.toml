@@ -1,0 +1,35 @@
+[admin_service]
+port = 9096
+adminUsername = "admin"
+adminPassword = "admin123"
+
+[passenger_service]
+host = "passenger-service"
+port = 9091
+
+[transport_service]
+host = "transport-service"
+port = 9092
+
+[payment_service]
+host = "payment-service"
+port = 9094
+
+[ticketing_service]
+host = "ticketing-service"
+port = 9095
+
+[notification_service]
+host = "notification-service"
+port = 9097
+
+[mongodb]
+host = "mongodb"
+port = 27017
+database = "transport_ticketing_system"
+
+[kafka]
+bootstrapServers = "kafka:9092"
+scheduleUpdatesTopic = "schedule-updates"
+disruptionsTopic = "disruptions"
+systemEventsTopic = "system-events"
