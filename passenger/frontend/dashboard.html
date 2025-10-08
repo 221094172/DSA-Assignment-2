@@ -60,22 +60,20 @@
                 <section id="bookSection" class="content-section">
                     <h2>Book a Ticket</h2>
                     <div class="book-card">
-                        <p class="info-message">
-                            ℹ️ Ticket booking will be available once the Route and Ticket services are integrated.
-                        </p>
+                        <div id="successMessage" class="success-message" style="display: none;"></div>
+                        <div id="errorMessage" class="error-message" style="display: none;"></div>
                         <form id="bookTicketForm" class="booking-form">
                             <div class="form-group">
-                                <label for="ticketType">Ticket Type</label>
-                                <select id="ticketType" name="ticketType" disabled>
-                                    <option value="">Select ticket type</option>
-                                    <option value="single">Single Ride</option>
-                                    <option value="return">Return</option>
-                                    <option value="day-pass">Day Pass</option>
-                                    <option value="weekly-pass">Weekly Pass</option>
-                                    <option value="monthly-pass">Monthly Pass</option>
+                                <label for="tripSelect">Select Trip</label>
+                                <select id="tripSelect" name="tripSelect" required>
+                                    <option value="">Loading trips...</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary" disabled>Coming Soon</button>
+                            <div class="form-group">
+                                <label for="seatNumber">Seat Number (Optional)</label>
+                                <input type="text" id="seatNumber" name="seatNumber" placeholder="e.g., A1">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Book Ticket</button>
                         </form>
                     </div>
                 </section>
