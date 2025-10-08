@@ -60,20 +60,22 @@
                 <section id="bookSection" class="content-section">
                     <h2>Book a Ticket</h2>
                     <div class="book-card">
-                        <div id="successMessage" class="success-message" style="display: none;"></div>
-                        <div id="errorMessage" class="error-message" style="display: none;"></div>
+                        <p class="info-message">
+                            ℹ️ Ticket booking will be available once the Route and Ticket services are integrated.
+                        </p>
                         <form id="bookTicketForm" class="booking-form">
                             <div class="form-group">
-                                <label for="tripSelect">Select Trip</label>
-                                <select id="tripSelect" name="tripSelect" required>
-                                    <option value="">Loading trips...</option>
+                                <label for="ticketType">Ticket Type</label>
+                                <select id="ticketType" name="ticketType" disabled>
+                                    <option value="">Select ticket type</option>
+                                    <option value="single">Single Ride</option>
+                                    <option value="return">Return</option>
+                                    <option value="day-pass">Day Pass</option>
+                                    <option value="weekly-pass">Weekly Pass</option>
+                                    <option value="monthly-pass">Monthly Pass</option>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="seatNumber">Seat Number (Optional)</label>
-                                <input type="text" id="seatNumber" name="seatNumber" placeholder="e.g., A1">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Book Ticket</button>
+                            <button type="submit" class="btn btn-primary" disabled>Coming Soon</button>
                         </form>
                     </div>
                 </section>
