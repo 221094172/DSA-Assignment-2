@@ -1,0 +1,17 @@
+[notification_service]
+enableConsoleOutput = true
+enableEmailSimulation = true
+enableSmsSimulation = true
+
+[mongodb]
+host = "mongodb"
+port = 27017
+database = "transport_ticketing_system"
+
+[kafka]
+bootstrapServers = "kafka:9092"
+groupId = "notification-service-group"
+scheduleUpdatesTopic = "schedule-updates"
+ticketValidatedTopic = "ticket-validated"
+paymentsProcessedTopic = "payments-processed"
+ticketCreatedTopic = "ticket-created"

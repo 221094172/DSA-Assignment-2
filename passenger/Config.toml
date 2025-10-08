@@ -1,0 +1,12 @@
+# Server configuration
+servicePort = 9091
+serviceHost = "0.0.0.0"
+
+# MongoDB configuration
+mongoHost = "mongodb"
+mongoPort = 27017
+mongoDatabase = "transport_ticketing_system"
+
+# Kafka configuration
+kafkaBootstrapServers = "kafka:9092"
+passengerEventsTopic = "passenger-events"

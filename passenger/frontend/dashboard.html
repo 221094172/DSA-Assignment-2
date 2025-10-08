@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Transport Ticketing</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="dashboard-header">
+            <h1>🚌 Transport Ticketing System</h1>
+            <div class="user-info">
+                <span id="userWelcome"></span>
+                <button id="logoutBtn" class="btn btn-secondary btn-sm">Logout</button>
+            </div>
+        </header>
+
+        <main class="dashboard-screen">
+            <div class="dashboard-sidebar">
+                <nav class="dashboard-nav">
+                    <a href="#" class="nav-item active" data-section="profile">
+                        <span>👤</span> Profile
+                    </a>
+                    <a href="#" class="nav-item" data-section="tickets">
+                        <span>🎫</span> My Tickets
+                    </a>
+                    <a href="#" class="nav-item" data-section="book">
+                        <span>📝</span> Book Ticket
+                    </a>
+                </nav>
+            </div>
+
+            <div class="dashboard-content">
+                <!-- Profile Section -->
+                <section id="profileSection" class="content-section active">
+                    <h2>My Profile</h2>
+                    <div class="profile-card">
+                        <div class="profile-info" id="profileInfo">
+                            <p>Loading...</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tickets Section -->
+                <section id="ticketsSection" class="content-section">
+                    <h2>My Tickets</h2>
+                    <div class="tickets-filter">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="active">Active</button>
+                        <button class="filter-btn" data-filter="used">Used</button>
+                        <button class="filter-btn" data-filter="expired">Expired</button>
+                    </div>
+                    <div id="ticketsList" class="tickets-list">
+                        <p>Loading tickets...</p>
+                    </div>
+                </section>
+
+                <!-- Book Ticket Section -->
+                <section id="bookSection" class="content-section">
+                    <h2>Book a Ticket</h2>
+                    <div class="book-card">
+                        <p class="info-message">
+                            ℹ️ Ticket booking will be available once the Route and Ticket services are integrated.
+                        </p>
+                        <form id="bookTicketForm" class="booking-form">
+                            <div class="form-group">
+                                <label for="ticketType">Ticket Type</label>
+                                <select id="ticketType" name="ticketType" disabled>
+                                    <option value="">Select ticket type</option>
+                                    <option value="single">Single Ride</option>
+                                    <option value="return">Return</option>
+                                    <option value="day-pass">Day Pass</option>
+                                    <option value="weekly-pass">Weekly Pass</option>
+                                    <option value="monthly-pass">Monthly Pass</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary" disabled>Coming Soon</button>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/tickets.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
