@@ -1,0 +1,12 @@
+{
+  "name": "transport-ticketing-frontend",
+  "version": "1.0.0",
+  "description": "Transport Ticketing System Frontend Preview",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
+}
